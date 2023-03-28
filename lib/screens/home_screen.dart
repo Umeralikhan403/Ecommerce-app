@@ -1,4 +1,3 @@
-import 'package:badges/badges.dart';
 import 'package:ecommerce_app/providers/cart.dart';
 import 'package:ecommerce_app/providers/products.dart';
 import 'package:ecommerce_app/screens/cart_screen.dart';
@@ -20,7 +19,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var _isInit = true;
-  var _isLoading = false;
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -32,13 +30,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void didChangeDependencies() {
     if (_isInit) {
-      setState(() {
-        _isLoading = true;
-      });
+      setState(() {});
       Provider.of<Products>(context).fetchAndSetProducts().then((_) {
-        setState(() {
-          _isLoading = false;
-        });
+        setState(() {});
       });
     }
     _isInit = false;
@@ -83,11 +77,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           BottomNavigationBarItem(
             icon: Badge(
-              badgeContent: Text(
+              label: Text(
                 cart.itemsCount.toString(),
                 style: const TextStyle(color: Colors.white, fontSize: 12),
               ),
-              badgeColor: Colors.purple,
+              backgroundColor: Colors.purple,
               child: GestureDetector(
                 onTap: () => Get.toNamed(CartScreen.routeName),
                 child: const Icon(

@@ -27,11 +27,11 @@ class Order with ChangeNotifier {
   get http => null;
 
   Future<void> fetchAndSetOrders() async {
-    final url = Uri.https(
-        'https://ecommerce-15ef1-default-rtdb.firebaseio.com/orders.json');
+    final url = Uri.https('.....firebaseio.com/orders.json');
     final response = await http.get(url);
     final List<OrderItem> loadedOrders = [];
     final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    // ignore: unnecessary_null_comparison
     if (extractedData == null) {
       return;
     }
@@ -59,8 +59,7 @@ class Order with ChangeNotifier {
   }
 
   Future<void> addOrder(List<CartItem> cartProducts, double total) async {
-    final url = Uri.https(
-        'https://ecommerce-15ef1-default-rtdb.firebaseio.com/orders.json');
+    final url = Uri.https('....firebaseio.com/orders.json');
     final timestamp = DateTime.now();
     final response = await http.post(
       url,

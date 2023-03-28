@@ -9,6 +9,7 @@ class EditProductScreen extends StatefulWidget {
   const EditProductScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _EditProductScreenState createState() => _EditProductScreenState();
 }
 
@@ -126,7 +127,10 @@ class _EditProductScreenState extends State<EditProductScreen> {
     setState(() {
       _isLoading = false;
     });
-    Navigator.of(context).pop();
+    if (context.mounted) {
+      Navigator.of(context).pop();
+    }
+
     // Navigator.of(context).pop();
   }
 

@@ -102,11 +102,11 @@ class Products with ChangeNotifier {
   }
 
   Future<void> fetchAndSetProducts() async {
-    final url = Uri.https(
-        'https://ecommerce-15ef1-default-rtdb.firebaseio.com/products.json');
+    final url = Uri.https('....firebaseio.com/products.json');
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      // ignore: unnecessary_null_comparison
       if (extractedData == null) {
         return;
       }
@@ -124,13 +124,12 @@ class Products with ChangeNotifier {
       _items = loadedProducts;
       notifyListeners();
     } catch (error) {
-      throw (error);
+      rethrow;
     }
   }
 
   Future<void> addProduct(Product product) async {
-    final url = Uri.https(
-        'https://ecommerce-15ef1-default-rtdb.firebaseio.com/products.json');
+    final url = Uri.https('.....firebaseio.com/products.json');
     try {
       final response = await http.post(
         url,
@@ -153,16 +152,14 @@ class Products with ChangeNotifier {
       // _items.insert(0, newProduct); // at the start of the list
       notifyListeners();
     } catch (error) {
-      print(error);
-      throw error;
+      rethrow;
     }
   }
 
   Future<void> updateProduct(String id, Product newProduct) async {
     final prodIndex = _items.indexWhere((prod) => prod.id == id);
     if (prodIndex >= 0) {
-      final url = Uri.https(
-          'https://ecommerce-15ef1-default-rtdb.firebaseio.com/products/$id.json');
+      final url = Uri.https('.....firebaseio.com/products/$id.json');
       await http.patch(url,
           body: json.encode({
             'title': newProduct.title,
@@ -172,14 +169,11 @@ class Products with ChangeNotifier {
           }));
       _items[prodIndex] = newProduct;
       notifyListeners();
-    } else {
-      print('...');
     }
   }
 
   Future<void> deleteProduct(String id) async {
-    final url = Uri.https(
-        'https://ecommerce-15ef1-default-rtdb.firebaseio.com/products/$id.json');
+    final url = Uri.https('.....firebaseio.com/products/$id.json');
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     var existingProduct = _items[existingProductIndex];
     _items.removeAt(existingProductIndex);

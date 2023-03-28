@@ -1,4 +1,3 @@
-import 'package:badges/badges.dart';
 import 'package:ecommerce_app/providers/cart.dart';
 import 'package:ecommerce_app/providers/products.dart';
 import 'package:ecommerce_app/screens/cart_screen.dart';
@@ -40,7 +39,7 @@ class DetailScreen2 extends StatelessWidget {
                     onTap: () => Get.toNamed(HomeScreen.routeName),
                     child: const AppIcon(icon: Icons.arrow_back)),
                 Badge(
-                  badgeContent: Text(
+                  label: Text(
                     cart.itemsCount.toString(),
                     style: const TextStyle(color: Colors.white),
                   ),
