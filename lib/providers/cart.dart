@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 class CartItem {
   final String id;
@@ -7,10 +7,10 @@ class CartItem {
   final double price;
 
   CartItem({
-    required this.id,
-    required this.title,
-    required this.quantity,
-    required this.price,
+    @required this.id,
+    @required this.title,
+    @required this.quantity,
+    @required this.price,
   });
 }
 
@@ -21,7 +21,7 @@ class Cart with ChangeNotifier {
     return {..._items};
   }
 
-  int get itemsCount {
+  int get itemCount {
     return _items.length;
   }
 
@@ -33,24 +33,38 @@ class Cart with ChangeNotifier {
     return total;
   }
 
-  void addItem(String productId, double price, String title) {
+  void addItem(
+    String productId,
+    double price,
+    String title,
+  ) {
     if (_items.containsKey(productId)) {
+      // change quantity...
       _items.update(
-          productId,
-          (existingCartItem) => CartItem(
-              id: DateTime.now().toString(),
+        productId,
+        (existingCartItem) => CartItem(
+              id: existingCartItem.id,
               title: existingCartItem.title,
+              price: existingCartItem.price,
               quantity: existingCartItem.quantity + 1,
-              price: existingCartItem.price));
+            ),
+      );
     } else {
       _items.putIfAbsent(
-          productId,
-          () => CartItem(
+        productId,
+        () => CartItem(
               id: DateTime.now().toString(),
               title: title,
               price: price,
-              quantity: 1));
+              quantity: 1,
+            ),
+      );
     }
+    notifyListeners();
+  }
+
+  void removeItem(String productId) {
+    _items.remove(productId);
     notifyListeners();
   }
 
@@ -58,7 +72,7 @@ class Cart with ChangeNotifier {
     if (!_items.containsKey(productId)) {
       return;
     }
-    if (_items[productId]!.quantity > 1) {
+    if (_items[productId].quantity > 1) {
       _items.update(
           productId,
           (existingCartItem) => CartItem(
@@ -70,11 +84,6 @@ class Cart with ChangeNotifier {
     } else {
       _items.remove(productId);
     }
-    notifyListeners();
-  }
-
-  void itemsRemove(String productId) {
-    _items.remove(productId);
     notifyListeners();
   }
 
